@@ -50,7 +50,7 @@ export default function GoogleDriveClone() {
             >
               My Drive
             </Button>
-            {getBreadcrumbs().map((folder, index) => (
+            {getBreadcrumbs().map((folder) => (
               <div key={folder.id} className="flex items-center">
                 <ChevronRight className="mx-2 text-gray-500" size={16} />
                 <Button
@@ -90,7 +90,7 @@ export default function GoogleDriveClone() {
                         {file.name}
                       </button>
                     ) : (
-                      <Link href={file.url || "#"} className="flex items-center text-gray-100 hover:text-blue-400">
+                      <Link href={file.url ?? "#"} className="flex items-center text-gray-100 hover:text-blue-400">
                         <FileIcon className="mr-3" size={20} />
                         {file.name}
                       </Link>
