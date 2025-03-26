@@ -2,7 +2,7 @@ import "server-only";
 
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db"
-import { files_table as fileSchema, folders_table as folderSchema } from "~/server/db/schema"
+import { files_table as fileSchema, folders_table as folderSchema, type DB_FileType } from "~/server/db/schema"
 
 export async function getAllParentsForFolder(folderId: number) {
   const parents = [];
@@ -27,7 +27,19 @@ export function getFiles(folderId: number) {
   return db.select().from(fileSchema).where(eq(fileSchema.parent, folderId)); 
 }
 
-
+export const MUTATIONS = {
+  createFile: async function (input: {
+    file: {
+      name: string;
+      size: number;
+      url: string;
+      parent: number;
+    };
+    userId: string
+  }) {
+    return db.insert(fileSchema).values(input.file);
+  }
+}
   
 
 
