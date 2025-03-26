@@ -1,6 +1,6 @@
 import "server-only";
 
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { db } from "~/server/db"
 import { files_table as fileSchema, folders_table as folderSchema } from "~/server/db/schema"
 
@@ -32,6 +32,12 @@ export async function getFolderById(folderId: number) {
   return folder[0];
 }
 
+export async function getRootFolderForUser(userId: string) {
+  const folder = await db.select().from(folderSchema).where(and(eq(folderSchema.ownerId, userId), isNull(folderSchema.parent)));
+
+  return folder[0];
+}
+
 export const MUTATIONS = {
   createFile: async function (input: {
     file: {
@@ -46,6 +52,35 @@ export const MUTATIONS = {
       ...input.file,
       ownerId: input.userId
     });
+  },
+
+  onboardUser: async function (userId: string) {
+    const rootFolder = await db.insert(folderSchema).values({
+      name: "Root",
+      parent: null,
+      ownerId: userId
+    }).$returningId();
+
+    const rootFolderId = rootFolder[0]!.id;
+
+    await db.insert(folderSchema).values([{
+      name: "Documents",
+      parent: rootFolderId,
+      ownerId: userId
+    }, {
+      name: "Images",
+      parent: rootFolderId,
+      ownerId: userId
+    }, {
+      name: "Videos",
+      parent: rootFolderId,
+      ownerId: userId
+    }, {
+      name: "Music",
+      parent: rootFolderId,
+      ownerId: userId
+    }])
+    return rootFolderId;
   }
 }
   
