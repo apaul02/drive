@@ -2,9 +2,11 @@
 
 ## TODO
 
-- [X] Set up Database
-- [X] Move folder opne state to URL
-- [X] Add auth
-- [ ] Add file uploading
-- [ ] Add analytics
-- [ ] Add a proper homepage
+- [ ] Folder Creation 
+- [ ] Folder Rename
+- [ ] Access Control
+- [ ] Folder Deletion
+- [ ] Tidy up the UI
+- [ ] File view
+- [ ] Loaders Everywhere
+ 
