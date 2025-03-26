@@ -2,7 +2,7 @@ import "server-only";
 
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db"
-import { files_table as fileSchema, folders_table as folderSchema, type DB_FileType } from "~/server/db/schema"
+import { files_table as fileSchema, folders_table as folderSchema } from "~/server/db/schema"
 
 export async function getAllParentsForFolder(folderId: number) {
   const parents = [];
