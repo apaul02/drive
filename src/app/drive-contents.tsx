@@ -11,7 +11,8 @@ import { useRouter } from "next/navigation"
 export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
   folders: typeof folders_table.$inferSelect[],
-  parents: typeof folders_table.$inferSelect[]
+  parents: typeof folders_table.$inferSelect[],
+  currentFolderId: number;
 }) {
   const navigate = useRouter();
 
@@ -21,12 +22,12 @@ export default function DriveContents(props: {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <Link
+            {/* <Link
               href={"/f/1"}
               className="text-gray-300 hover:text-white mr-2"
             >
               My Drive
-            </Link>
+            </Link> */}
             {props.parents.map((folder) => (
               <div key={folder.id} className="flex items-center">
                 <ChevronRight className="mx-2 text-gray-500" size={16} />
@@ -67,7 +68,9 @@ export default function DriveContents(props: {
             ))}
           </ul>
         </div>
-        <UploadButton endpoint={"imageUploader"} onClientUploadComplete={() => {navigate.refresh()}} />
+        <UploadButton endpoint={"imageUploader"} onClientUploadComplete={() => {navigate.refresh()}} input={{
+          folderId: props.currentFolderId
+        }} />
       </div>
     </div>
   )

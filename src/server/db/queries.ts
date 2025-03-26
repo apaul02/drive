@@ -27,6 +27,11 @@ export function getFiles(folderId: number) {
   return db.select().from(fileSchema).where(eq(fileSchema.parent, folderId)); 
 }
 
+export async function getFolderById(folderId: number) {
+  const folder = await db.select().from(folderSchema).where(eq(folderSchema.id, folderId));
+  return folder[0];
+}
+
 export const MUTATIONS = {
   createFile: async function (input: {
     file: {
@@ -37,7 +42,10 @@ export const MUTATIONS = {
     };
     userId: string
   }) {
-    return db.insert(fileSchema).values(input.file);
+    return db.insert(fileSchema).values({
+      ...input.file,
+      ownerId: input.userId
+    });
   }
 }
   
