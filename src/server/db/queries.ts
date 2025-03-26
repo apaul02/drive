@@ -20,11 +20,11 @@ export async function getAllParentsForFolder(folderId: number) {
 }
 
 export function getFolders(folderId: number) {
-  return db.select().from(folderSchema).where(eq(folderSchema.parent, folderId));
+  return db.select().from(folderSchema).where(eq(folderSchema.parent, folderId)).orderBy(folderSchema.id); ;
 }
   
 export function getFiles(folderId: number) {
-  return db.select().from(fileSchema).where(eq(fileSchema.parent, folderId)); 
+  return db.select().from(fileSchema).where(eq(fileSchema.parent, folderId)).orderBy(fileSchema.id); 
 }
 
 export async function getFolderById(folderId: number) {
