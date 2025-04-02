@@ -4,9 +4,20 @@ import { ChevronRight } from "lucide-react"
 import { FileRow, FolderRow } from "./file-row"
 import type { files_table, folders_table } from "~/server/db/schema"
 import Link from "next/link"
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs"
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 import { UploadButton } from "~/components/uploadthing"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { Button } from "~/components/ui/button"
+import { createFolderAction } from "~/server/actions"
+import { useState } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "~/components/ui/dialog"
+import { Input } from "~/components/ui/input"
 
 export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
@@ -15,7 +26,22 @@ export default function DriveContents(props: {
   currentFolderId: number;
 }) {
   const navigate = useRouter();
+  const session = useUser();
+  const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
+  const [newFolderName, setNewFolderName] = useState("");
+  
+  if(!session.user) {
+    redirect("/sign-in");
+  }
 
+  const handleCreateFolder = async () => {
+    if (newFolderName.trim()) {
+      await createFolderAction(newFolderName, props.currentFolderId);
+      setNewFolderName("");
+      setIsCreateFolderOpen(false);
+      navigate.refresh();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-8">
@@ -69,10 +95,41 @@ export default function DriveContents(props: {
             ))}
           </ul>
         </div>
-        <UploadButton endpoint={"driveUploader"} onClientUploadComplete={() => {navigate.refresh()}} input={{
-          folderId: props.currentFolderId
-        }} />
-      </div>
+        <div className="mt-4 flex gap-4">
+          <UploadButton endpoint={"driveUploader"} onClientUploadComplete={() => {navigate.refresh()}} input={{
+            folderId: props.currentFolderId
+          }} />
+          <Button onClick={() => setIsCreateFolderOpen(true)}>Create folder here</Button>
+        </div>
+        
+        <Dialog open={isCreateFolderOpen} onOpenChange={setIsCreateFolderOpen}>
+          <DialogContent className="bg-gray-800 text-white sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Create New Folder</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <Input
+                placeholder="Enter folder name"
+                value={newFolderName}
+                onChange={(e) => setNewFolderName(e.target.value)}
+                className="bg-gray-700 border-gray-600"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleCreateFolder();
+                }}
+              />
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={() => setIsCreateFolderOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleCreateFolder}>
+                Create
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>  
     </div>
   )
 }

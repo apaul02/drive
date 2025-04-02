@@ -1,4 +1,5 @@
 "use server";
+import "server-only"
 
 import { and, eq } from "drizzle-orm";
 import { db } from "./db";
@@ -6,6 +7,7 @@ import { files_table } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { UTApi } from "uploadthing/server";
 import { cookies } from "next/headers";
+import { MUTATIONS } from "./db/queries";
 
 const utApi = new UTApi();
 
@@ -32,5 +34,26 @@ export async function deleteFile(fileId: number) {
 
   c.set("force-refresh", JSON.stringify(Math.random()));
 
+  return { success: true };
+}
+
+export async function createFolderAction(name: string, parentId: number) {
+  const session = await auth();
+  if(!session.userId) {
+    return { error: "Unauthorized" };
+  }
+  const folder = await MUTATIONS.createFolder({
+    folder: {
+      name,
+      parent: parentId,
+    },
+    userId: session.userId,
+  })
+  if(!folder) {
+    return { error: "Failed to create folder" };
+  }
+
+  // const c = await cookies();
+  // c.set("force-refresh", JSON.stringify(Math.random()));
   return { success: true };
 }

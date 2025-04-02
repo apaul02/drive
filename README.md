@@ -2,7 +2,7 @@
 
 ## TODO
 
-- [ ] Folder Creation 
+- [x] Folder Creation 
 - [ ] Folder Rename
 - [ ] Access Control
 - [ ] Folder Deletion
