@@ -67,6 +67,14 @@ export const MUTATIONS = {
       ownerId: input.userId
     })
   },
+  renameFolder: async function (input: {
+    folder: {
+      name: string;
+      folderId: number;
+    }
+  }) {
+    return db.update(folderSchema).set({name: input.folder.name}).where(eq(folderSchema.id, input.folder.folderId));
+  },
 
   onboardUser: async function (userId: string) {
     const rootFolder = await db.insert(folderSchema).values({

@@ -34,7 +34,7 @@ export default function DriveContents(props: {
     redirect("/sign-in");
   }
 
-  const handleCreateFolder = async () => {
+  const handleCreateFolder = async () => {  
     if (newFolderName.trim()) {
       try {
         await createFolderAction(newFolderName, props.currentFolderId);

@@ -57,3 +57,17 @@ export async function createFolderAction(name: string, parentId: number) {
   // c.set("force-refresh", JSON.stringify(Math.random()));
   return { success: true };
 }
+
+export async function renameFolderAction(name: string, folderId: number) {
+  const session = await auth();
+  if(!session.userId) {
+    return { error: "Unauthorized" };
+  }
+  const folder = await MUTATIONS.renameFolder({folder: {name, folderId}});
+  if(!folder) {
+    return { error: "Failed to rename folder" };
+  }
+  const c = await cookies();
+  c.set("force-refresh", JSON.stringify(Math.random()));
+  return { success: true };
+}
