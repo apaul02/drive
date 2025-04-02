@@ -36,10 +36,15 @@ export default function DriveContents(props: {
 
   const handleCreateFolder = async () => {
     if (newFolderName.trim()) {
-      await createFolderAction(newFolderName, props.currentFolderId);
-      setNewFolderName("");
-      setIsCreateFolderOpen(false);
-      navigate.refresh();
+      try {
+        await createFolderAction(newFolderName, props.currentFolderId);
+        setNewFolderName("");
+        setIsCreateFolderOpen(false);
+        navigate.refresh();
+      } catch (error) {
+        console.error("Failed to create folder:", error);
+        // Optionally add error handling UI here
+      }
     }
   };
 
