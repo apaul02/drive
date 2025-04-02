@@ -119,8 +119,11 @@ export default function DriveContents(props: {
                 onChange={(e) => setNewFolderName(e.target.value)}
                 className="bg-gray-700 border-gray-600"
                 autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleCreateFolder();
+                onKeyDown={async (e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    await handleCreateFolder();
+                  };
                 }}
               />
             </div>
