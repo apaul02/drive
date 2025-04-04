@@ -1,7 +1,7 @@
-import { Folder as FolderIcon, FileIcon, Trash2Icon, PencilLineIcon } from "lucide-react"
+import { Folder as FolderIcon, FileIcon, Trash2Icon } from "lucide-react"
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { deleteFile, renameFolderAction } from "~/server/actions";
+import { deleteFile } from "~/server/actions";
 import type { files_table, folders_table } from "~/server/db/schema";
 import RenameFolderButton from "./rename-folder-button";
 

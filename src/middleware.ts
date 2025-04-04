@@ -15,10 +15,10 @@ const shouldRunMiddleware = createRouteMatcher([
   '/(api|trpc)(.*)',
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   // Protect all routes that are not public
   if (!isPublicRoute(req)) {
-    auth.protect(); // If the route is not public, enforce authentication
+    await auth.protect(); // If the route is not public, enforce authentication
   }
 }, { debug: false }); // Enable debug for more logs if needed
 
