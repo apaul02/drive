@@ -10,6 +10,7 @@ export default async function DrivePage() {
     return redirect("/sign-in");
   }
 
+
   const rootFolder = await getRootFolderForUser(session.userId);
 
   if(!rootFolder) {

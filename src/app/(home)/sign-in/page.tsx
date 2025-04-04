@@ -1,7 +1,10 @@
 import { SignInButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { Upload } from "lucide-react"
+import { redirect } from "next/navigation";
 
-export default function UploadifyHomepage() {
+export default async function SignInPage() {
+  
   return (
     <>
         <div className="container mx-auto px-4 flex flex-col items-center text-center">
@@ -16,7 +19,7 @@ export default function UploadifyHomepage() {
             Uploadify gives you secure cloud storage, seamless file sharing, and powerful collaboration tools in one
             platform.
           </p>
-            <SignInButton forceRedirectUrl={"/drive"} />
+            <SignInButton forceRedirectUrl={"/drive"}  />
           <div className="mt-4 text-neutral-500 text-sm">Free plan available. No credit card required.</div>
         </div>
         </>

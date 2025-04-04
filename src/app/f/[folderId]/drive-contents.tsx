@@ -30,8 +30,12 @@ export default function DriveContents(props: {
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   
-  if(!session.user) {
-    redirect("/sign-in");
+  // if(!session.user) {
+  //   redirect("/sign-in");
+  // }
+
+  if(!session.isLoaded) {
+    return <div>Loading...</div>
   }
 
   const handleCreateFolder = async () => {  
