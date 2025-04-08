@@ -36,7 +36,7 @@ export default function RenameFolderButton(props: { folderId: number, previousNa
         className="text-gray-400 hover:text-white"
       >
         <Pencil size={16} />
-        <span className="ml-1">Rename</span>
+        <span className="ml-1"></span>
       </Button>
       
       <Dialog open={isFolderRenameOpen} onOpenChange={setIsFolderRenameOpen}>

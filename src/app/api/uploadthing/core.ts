@@ -48,6 +48,7 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
       console.log("file url", file.ufsUrl);
+      console.log("Upload Complete");;
 
       await MUTATIONS.createFile({
         file: {
@@ -58,7 +59,7 @@ export const ourFileRouter = {
         },
         userId: metadata.userId,
       })
-      
+      console.log("File created in DB");
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
