@@ -11,6 +11,9 @@
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-charcoal: #2e2e2e;
+  --color-lilac: #d6cfe1;
 }
 
 :root {
@@ -127,4 +130,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.group:hover {
+  box-shadow: 5px 5px 6px rgb(35, 34, 34); /* Adjusted values for softer shadow */
 }
