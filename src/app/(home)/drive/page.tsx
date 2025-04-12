@@ -49,7 +49,7 @@ export default async function DrivePage() {
           <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             <div className="max-w-3xl mx-auto space-y-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-800">
-                It looks like you don't have a root folder yet. Let's create one for you to get started.
+                {"It looks like you don't have a root folder yet. Let's create one for you to get started."}
               </h1>
               {/* You can add a more descriptive paragraph here if needed */}
               {/* <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
