@@ -10,5 +10,11 @@
 - [ ] Tidy up the UI
 - [ ] File view
 - [ ] Loaders Everywhere
+
+## Making the UI look good
+
+- [x] HomePage
+- [ ] /drive page
+- [ ] Main folder page
  
  

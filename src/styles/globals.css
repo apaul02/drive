@@ -14,6 +14,8 @@
 
   --color-charcoal: #2e2e2e;
   --color-lilac: #d6cfe1;
+  --color-lightgray: #F4F4F4;
+  --color-darkteal: #008080;
 }
 
 :root {
@@ -133,5 +135,5 @@
 }
 
 .group:hover {
-  box-shadow: 5px 5px 6px rgb(35, 34, 34); /* Adjusted values for softer shadow */
+  box-shadow: 5px 5px 0px rgb(0, 0, 0); /* Adjusted values for softer shadow */
 }
