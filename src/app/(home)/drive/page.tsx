@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { ChevronRight, Upload } from "lucide-react";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
+import { CreateRootFolderButton } from "./createRootFolderButton";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -49,30 +50,13 @@ export default async function DrivePage() {
           <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             <div className="max-w-3xl mx-auto space-y-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-800">
-                {"It looks like you don't have a root folder yet. Let's create one for you to get started."}
+                {"It looks like you don't have a root folder yet. Let's create one for you to get started."}  
               </h1>
               {/* You can add a more descriptive paragraph here if needed */}
               {/* <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
                 Some additional information or context.
               </p> */}
-              <form action={async () => {
-                "use server";
-                const session = await auth();
-                if (!session.userId) {
-                  return redirect("/sign-in");
-                }
-                const rootFolderId = await MUTATIONS.onboardUser(session.userId);
-                return redirect(`/f/${rootFolderId}`);
-              }}>
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="group shadow-none ring-black cursor-pointer transition-all ease-in-out duration-300 hover:scale-105 mt-8 px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg bg-charcoal hover:bg-charcoal-100"
-                >
-                  <span className={`${funnelDisplay.className}`}>Create Root Folder</span>
-                  <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-all duration-300" />
-                </Button>
-              </form>
+              <CreateRootFolderButton />
             </div>
           </div>
         </main>

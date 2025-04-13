@@ -115,3 +115,15 @@ export async function deleteFolderAction(folderId: number) {
     return { error: "Failed to delete folder" };
   }
 }
+
+export async function onBoardUserAction() {
+  const session = await auth();
+  if(!session.userId) {
+    return { error: "Unauthorized" };
+  }
+  const rootFolderId = await MUTATIONS.onboardUser(session.userId);
+  if(!rootFolderId) {
+    return { error: "Failed to create root folder" };
+  }
+  return { success: true, rootFolderId };
+}

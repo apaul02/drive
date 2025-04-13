@@ -15,6 +15,9 @@ const funnelDisplay = Funnel_Display({
   weight: "500",
 });
 
+
+
+
 export default function UploadifyHomepage() {
   return (
     <div className={`${poppins.className} bg-gray-100 text-gray-900`}>

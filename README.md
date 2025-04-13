@@ -10,11 +10,12 @@
 - [ ] Tidy up the UI
 - [ ] File view
 - [ ] Loaders Everywhere
+- [ ] Add a Loader for the client buttons
 
 ## Making the UI look good
 
 - [x] HomePage
-- [ ] /drive page
+- [x] /drive page
 - [ ] Main folder page
  
  
