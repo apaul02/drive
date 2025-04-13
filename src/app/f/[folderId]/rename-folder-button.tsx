@@ -33,14 +33,13 @@ export default function RenameFolderButton(props: { folderId: number, previousNa
         onClick={() => setIsFolderRenameOpen(true)} 
         variant="ghost" 
         size="sm" 
-        className="text-gray-400 hover:text-white"
+        className=" hover:bg-gray-300"
       >
         <Pencil size={16} />
-        <span className="ml-1"></span>
       </Button>
       
       <Dialog open={isFolderRenameOpen} onOpenChange={setIsFolderRenameOpen}>
-        <DialogContent className="bg-gray-800 text-white sm:max-w-md">
+        <DialogContent className="bg-gray-100 text-gray-900 sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Rename Folder</DialogTitle>
           </DialogHeader>
@@ -49,7 +48,7 @@ export default function RenameFolderButton(props: { folderId: number, previousNa
               placeholder="Enter folder name"
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
-              className="bg-gray-700 border-gray-600"
+              className="bg-white border-gray-300"
               autoFocus
               onKeyDown={async (e) => {
                 if (e.key === 'Enter') {

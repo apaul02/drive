@@ -53,7 +53,7 @@ export default function DriveContents(props: {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
@@ -65,10 +65,10 @@ export default function DriveContents(props: {
             </Link> */}
             {props.parents.map((folder) => (
               <div key={folder.id} className="flex items-center">
-                <ChevronRight className="mx-2 text-gray-500" size={16} />
+                <ChevronRight className="mx-2 text-gray-900" size={16} />
                 <Link
                   href={`/f/${folder.id}`}
-                  className="text-gray-300 hover:text-white"
+                  className="text-gray-900 hover:text-blue-400"
                 >
                   {folder.name}
                 </Link>
@@ -85,8 +85,8 @@ export default function DriveContents(props: {
               </SignedIn>
             </div>
         </div>
-        <div className="bg-gray-800 rounded-lg shadow-xl">
-          <div className="px-6 py-4 border-b border-gray-700">
+        <div className="bg-gray-100 rounded-lg border border-gray-300">
+          <div className="px-6 py-4 border-b border-gray-300">
             <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
               <div className="col-span-6">Name</div>
               <div className="col-span-2">Type</div>
@@ -112,7 +112,7 @@ export default function DriveContents(props: {
         </div>
         
         <Dialog open={isCreateFolderOpen} onOpenChange={setIsCreateFolderOpen}>
-          <DialogContent className="bg-gray-800 text-white sm:max-w-md">
+          <DialogContent className="bg-gray-100 text-gray-900 sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Create New Folder</DialogTitle>
             </DialogHeader>
@@ -121,7 +121,7 @@ export default function DriveContents(props: {
                 placeholder="Enter folder name"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                className="bg-gray-700 border-gray-600"
+                className="bg-white border-gray-300"
                 autoFocus
                 onKeyDown={async (e) => {
                   if (e.key === 'Enter') {
