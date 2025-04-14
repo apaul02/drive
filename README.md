@@ -17,5 +17,18 @@
 - [x] HomePage
 - [x] /drive page
 - [ ] Main folder page
+- [ ] Border issue
+- [ ] Imporve buttons
+
+## Loaders
+
+- [x] Go to dashboard
+- [x] create root folder
+- [x] go to any folder
+- [x] create new folder
+- [x] rename folder
+- [ ] delete folder
+- [ ] upload file
+
  
  

@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Loader2 } from "lucide-react"
 import { FileRow, FolderRow } from "./file-row"
 import type { files_table, folders_table } from "~/server/db/schema"
 import Link from "next/link"
@@ -29,6 +29,7 @@ export default function DriveContents(props: {
   const session = useUser();
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
+  const [ isnNewFolderLoading, setIsNewFolderLoading] = useState(false);
   
   // if(!session.user) {
   //   redirect("/sign-in");
@@ -41,10 +42,12 @@ export default function DriveContents(props: {
   const handleCreateFolder = async () => {  
     if (newFolderName.trim()) {
       try {
+        setIsNewFolderLoading(true);
         await createFolderAction(newFolderName, props.currentFolderId);
         setNewFolderName("");
-        setIsCreateFolderOpen(false);
         navigate.refresh();
+        setIsNewFolderLoading(false);
+        setIsCreateFolderOpen(false);
       } catch (error) {
         console.error("Failed to create folder:", error);
         // Optionally add error handling UI here
@@ -96,7 +99,7 @@ export default function DriveContents(props: {
           </div>
           <ul>
             {props.folders.map((folder) => (
-              <FolderRow key={folder.id} folder={folder} />
+              <FolderRow key={folder.id} folder={folder}  />
               
             ))}
             {props.files.map((file) => (
@@ -135,8 +138,8 @@ export default function DriveContents(props: {
               <Button variant="outline" onClick={() => setIsCreateFolderOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={handleCreateFolder}>
-                Create
+              <Button className="min-w-[90px]" onClick={handleCreateFolder} disabled={isnNewFolderLoading}>
+                {isnNewFolderLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create"}
               </Button>
             </DialogFooter>
           </DialogContent>

@@ -6,19 +6,22 @@ import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { renameFolderAction } from "~/server/actions";
-import { Pencil } from "lucide-react"; // Import pencil icon
+import { Loader2, Pencil } from "lucide-react"; // Import pencil icon
 
-export default function RenameFolderButton(props: { folderId: number, previousName: string }) {
+export default function RenameFolderButton(props: { folderId: number, previousName: string, isDisabled?: boolean }) {
   const [folderName, setFolderName] = useState(props.previousName);
   const [isFolderRenameOpen, setIsFolderRenameOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useRouter();
 
   const handleRenameFolder = async () => {
     if(folderName.trim()) {
       try {
+        setLoading(true);
         await renameFolderAction(folderName, props.folderId);
         setFolderName("");
         setIsFolderRenameOpen(false);
+        setLoading(false);
         navigate.refresh();
       }catch (error) {
         console.error("Failed to rename folder:", error);
@@ -34,6 +37,7 @@ export default function RenameFolderButton(props: { folderId: number, previousNa
         variant="ghost" 
         size="sm" 
         className=" hover:bg-gray-300"
+        disabled={props.isDisabled}
       >
         <Pencil size={16} />
       </Button>
@@ -62,8 +66,8 @@ export default function RenameFolderButton(props: { folderId: number, previousNa
             <Button variant="outline" onClick={() => setIsFolderRenameOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleRenameFolder}>
-              Rename
+            <Button className="min-w-[90px]" onClick={handleRenameFolder} disabled={isLoading}>
+              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Rename"}
             </Button>
           </DialogFooter>
         </DialogContent>
