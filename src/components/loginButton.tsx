@@ -38,7 +38,7 @@ export function LoginButton() {
           onClick={handleGoToDashboard}
           disabled={isDashboardLoading}
           size="lg"
-          className="group shadow-none ring-black cursor-pointer transition-all ease-in-out duration-300 hover:scale-105 mt-8 px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg bg-charcoal hover:bg-charcoal-100"
+          className="group shadow-none hover:[box-shadow:5px_5px_0px_rgb(0,0,0)] ring-black cursor-pointer transition-all ease-in-out duration-300 hover:scale-105 mt-8 px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg bg-charcoal hover:bg-charcoal-100"
         >
           <div className="flex items-center justify-center min-w-[160px] sm:min-w-[180px]">
             {isDashboardLoading ? (

@@ -7,6 +7,8 @@ import type { files_table, folders_table } from "~/server/db/schema";
 import RenameFolderButton from "./rename-folder-button"; 
 import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
+import DeleteFolderButton from "./delete-folder-button";
+import DeleteFileButton from "./delete-file-button";
 
 const listItemBaseStyles = "px-6 py-4 border-b rounded-md border-gray-300 bg-gray-100 hover:bg-gray-200";
 const primaryTextColor = "text-gray-800";
@@ -33,15 +35,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
         <div className={`col-span-2 ${secondaryTextColor}`}>{"File"}</div>
         <div className={`col-span-2 ${secondaryTextColor}`}>{file.size}</div>
         <div className={`col-span-2 flex justify-end ${secondaryTextColor}`}> 
-          <Button
-            variant={"ghost"} 
-            onClick={() => deleteFile(file.id)}
-            aria-label="Delete File"
-            size="sm"
-            className="hover:bg-gray-300" 
-          >
-            <Trash2Icon size={18} />
-          </Button>
+          <DeleteFileButton fileId={file.id} fileName={file.name} />
         </div>
       </div>
     </li>
@@ -82,16 +76,7 @@ export function FolderRow(props: { folder: typeof folders_table.$inferSelect }) 
         <div className="col-span-2"></div> 
         <div className={`col-span-2 flex justify-end items-center gap-1 ${secondaryTextColor}`}>
           <RenameFolderButton previousName={folder.name} folderId={folder.id} isDisabled={loading} />
-          <Button
-            variant={"ghost"}
-            onClick={() => deleteFolderAction(folder.id)}
-            aria-label="Delete Folder"
-            size="sm"
-            disabled={loading}
-             className="hover:bg-gray-300"
-          >
-            <Trash2Icon size={18} />
-          </Button>
+          <DeleteFolderButton folderId={folder.id} isDisabled={loading} folderName={folder.name} />
         </div>
       </div>
     </li>

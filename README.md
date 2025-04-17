@@ -27,7 +27,8 @@
 - [x] go to any folder
 - [x] create new folder
 - [x] rename folder
-- [ ] delete folder
+- [x] delete folder
+- [x] delete file
 - [ ] upload file
 
  

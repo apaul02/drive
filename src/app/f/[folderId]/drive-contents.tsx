@@ -5,11 +5,11 @@ import { FileRow, FolderRow } from "./file-row"
 import type { files_table, folders_table } from "~/server/db/schema"
 import Link from "next/link"
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
-import { UploadButton } from "~/components/uploadthing"
+import { UploadButton, useUploadThing } from "~/components/uploadthing"
 import { redirect, useRouter } from "next/navigation"
 import { Button } from "~/components/ui/button"
 import { createFolderAction } from "~/server/actions"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import {
   Dialog,
   DialogContent,
@@ -30,6 +30,10 @@ export default function DriveContents(props: {
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   const [ isnNewFolderLoading, setIsNewFolderLoading] = useState(false);
+  const [breadcrumbLoading, setBreadcrumbLoading] = useState<number | null>(null);
+  const [isPending, startTransition] = useTransition();
+  // const { user } = useUser();
+  
   
   // if(!session.user) {
   //   redirect("/sign-in");
@@ -72,8 +76,21 @@ export default function DriveContents(props: {
                 <Link
                   href={`/f/${folder.id}`}
                   className="text-gray-900 hover:text-blue-400"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setBreadcrumbLoading(folder.id);
+                    startTransition(() => {
+                      navigate.push(`/f/${folder.id}`);
+                      setBreadcrumbLoading(null);
+                    });
+                  }}
                 >
-                  {folder.name}
+                  <div className="flex items-center gap-1">
+                  <span className="text-gray-900 hover:text-blue-600">{folder.name}</span>
+                  {breadcrumbLoading === folder.id ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ): null}
+                  </div>
                 </Link>
               </div>
             ))}
@@ -108,7 +125,7 @@ export default function DriveContents(props: {
           </ul>
         </div>
         <div className="mt-4 flex gap-4">
-          <UploadButton endpoint={"driveUploader"} onClientUploadComplete={() => {navigate.refresh()}} input={{
+          <UploadButton endpoint={"driveUploader"} className="ut-button:transition-all ut-button:ease-in-out ut-button:duration-300 ut-button:bg-red-500 ut-button:hover:scale-105 ut-button:hover:[box-shadow:5px_5px_0px_rgb(0,0,0)]" onClientUploadComplete={() => {navigate.refresh()}} input={{
             folderId: props.currentFolderId
           }} />
           <Button onClick={() => setIsCreateFolderOpen(true)}>Create folder here</Button>
